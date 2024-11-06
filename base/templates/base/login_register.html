@@ -1,0 +1,96 @@
+{% extends 'main.html' %}
+{% block content %}
+<main class="auth layout">
+  {% if page == 'login' %}
+  <div class="container">
+    <div class="layout__box">
+      <div class="layout__boxHeader">
+        <div class="layout__boxTitle">
+          <h3>Login</h3>
+        </div>
+      </div>
+      <div class="layout__body">
+        <h2 class="auth__tagline">Find your study partner</h2>
+
+        <form class="form" action="" method="POST">
+          {% csrf_token %}
+          <div class="form__group form__group">
+            <label for="room_name">Email</label>
+            <input id="username" name="username" type="text" placeholder="e.g. dennis_ivy" />
+          </div>
+          <div class="form__group">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+            />
+          </div>
+
+          {% if messages %}
+          <div class="form__group form__error">
+            {% for message in messages %}
+              <p class="error-message">{{ message }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <button class="btn btn--main" type="submit">
+            <!-- SVG icon code -->
+            Login
+          </button>
+        </form>
+
+        <div class="auth__action">
+          <p>Haven't signed up yet?</p>
+          <a href="{% url 'register' %}" class="btn btn--link">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% else %}
+  <div class="container">
+    <div class="layout__box">
+      <div class="layout__boxHeader">
+        <div class="layout__boxTitle">
+          <h3>Register</h3>
+        </div>
+      </div>
+      <div class="layout__body">
+        <h2 class="auth__tagline">Find your study partner</h2>
+        
+        <form class="form" action="" method="POST">
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="form__group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+          </div>
+          {% endfor %}
+
+          {% if messages %}
+          <div class="form__group form__error">
+            {% for message in messages %}
+              <p class="error-message">{{ message }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <button class="btn btn--main" type="submit">
+            <!-- SVG icon code -->
+            Register
+          </button>
+        </form>
+
+        <div class="auth__action">
+          <p>Already signed up?</p>
+          <a href="{% url 'login' %}" class="btn btn--link">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}
